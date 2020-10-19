@@ -1,0 +1,24 @@
+{% extends 'pat/base.html'%}
+{% block content %}
+<h1>Personal Account Report</h1>
+{% for obj in object_list %}
+    <p><a href="{{obj.get_absolute_url}}">{{obj}}</a>
+        <a href="{% url 'update' obj.pk %}">Edit</a>
+        <a href="{% url 'delete' obj.pk %}">Delete</a>
+    </p>
+{% endfor %}
+<h2>Total money spent: {{total}}</h2>
+<h3>Money spent by categories:</h3>
+<p>Food : {{food}}</p>
+<p>Transport : {{transport}}</p>
+<p>Health : {{health}}</p>
+<p>Utilities : {{utilities}}</p>
+<p>Other : {{other}}</p>
+<br>
+<h3>Money spent by dates:</h3>
+{% for i,j in date %}
+<p>{{i}} : {{j}}</p>
+{% endfor %}
+<br>
+<button onclick=window.location.href="{% url 'create' %}">Create</button>
+{% endblock %}
