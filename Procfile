@@ -1,0 +1,1 @@
+web: gunicorn Activity_Tracker.wsgi --log-file -
