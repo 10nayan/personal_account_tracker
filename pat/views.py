@@ -1,3 +1,4 @@
+#import os
 from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,8 +18,10 @@ from .forms import ReportForm
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.conf.settings import WEATHER_APIKEY,CURRENCY_APIKEY
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
 """
 class ReportListView(ListView):
     template_name="pat/report_list.html"
@@ -49,12 +52,13 @@ class ReportDetailView(DetailView):
     #if we use pk in url
     #queryset=Article.objects.all()
     template_name='pat/report_detail.html'
-
+    def get_queryset(self):
+        return Report.objects.filter(profileLinked=self.request.user)
 
     #if we use id in url
-    def get_object(self):
-        id_=self.kwargs.get('id')
-        return get_object_or_404(Report,id=id_)
+    #def get_object(self):
+        #id_=self.kwargs.get('id')
+        #return get_object_or_404(Report,id=id_)
 
 class ReportCreateView(CreateView):
     template_name='pat/report_create.html'
@@ -67,16 +71,21 @@ class ReportCreateView(CreateView):
 class ReportUpdateView(UpdateView):
     template_name='pat/report_create.html'
     form_class=ReportForm
-    queryset=Report.objects.all()
+    def get_queryset(self):
+        return Report.objects.filter(profileLinked=self.request.user)
     # we use pk instead of id
     def form_valid(self,form):
         return super().form_valid(form)
 
 class ReportDeleteView(DeleteView):
     template_name='pat/report_delete.html'
+    """
     def get_object(self):
         id_=self.kwargs.get('id')
         return get_object_or_404(Report,id=id_)
+    """
+    def get_queryset(self):
+        return Report.objects.filter(profileLinked=self.request.user)
     def get_success_url(self):
        return reverse('list')
 def register(request):
@@ -106,3 +115,7 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('signin')
+
+def weather(request):
+    context={'WEATHER_APIKEY':WEATHER_APIKEY,'CURRENCY_APIKEY':CURRENCY_APIKEY}
+    return render (request,'pat/weather.html',context)

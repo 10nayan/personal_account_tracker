@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    {% load static %}
+    <script type="text/javascript">
+    window.addEventListener('load',()=>{
+    // reqired div are selected by getElementById function
+        const input=document.getElementById('input');
+        const result=document.getElementById('result');
+        const result2=document.getElementById('result2');
+        const btn=document.getElementById('btn');
+        var CAPITAL;//global varriable is defined
+        var CURRENCY;
+        var EXRATE=0;
+        const WEATHER_APIKEY =`{{WEATHER_APIKEY}}`;//api key is accessed from a config.js file
+        const CURRENCY_APIKEY= `{{CURRENCY_APIKEY}}`;
+        console.log(WEATHER_APIKEY);
+        //when button is clicked api request is sent to three servers and reponse is updated to result div
+        btn.addEventListener('click',()=>{
+          cnt_name=input.value;//searchbox value is stored in cnt_name
+          const country_api=`https://restcountries.eu/rest/v2/name/${cnt_name}`;//api request is sent along with country name
+          fetch(country_api)
+            .then(response=>{
+              return response.json();
+
+            })
+            //after getting the response name of country, capital, currency sign and namee is stored as respective varriable
+            .then(data=>{
+              var{name,capital}=data[0];
+              CAPITAL=capital;// value of capital is initialized to global CAPITAL varriable
+              const{code}=data[0].currencies[0];
+              CURRENCY=code;
+              const curr_name=data[0].currencies[0].name;
+              console.log(name);
+              console.log(capital);
+              console.log(code);
+              console.log(curr_name);
+            })
+        //then api request is sent to weather api server along with capital name of country
+            .then(data=>{
+            const api=`https://api.openweathermap.org/data/2.5/weather?q=${CAPITAL}&appid=${WEATHER_APIKEY}`
+            fetch(api)
+              .then(response=>{
+                return response.json();
+              })
+              //after getting the response back current weather information is extracted and stored in local varriable
+              .then(data=>{
+                const {id,main,description,icon}=data.weather[0];
+                const {temp,pressure,humidity}=data.main;
+                console.log(temp,pressure,humidity);
+                console.log(description);
+                //result div in main page is updated with weather information
+                result.innerHTML=`
+                <h4> ${main} ${description} </h4>
+                <p> Current temp:${parseInt(temp/10)} degree celcius, Current pressure: ${pressure} mb, Current humidity: ${humidity}%</p>
+                <img src="http://openweathermap.org/img/wn/${icon}@2x.png"/>
+                `;
+              });
+            })
+            //then api request is sent to fixer ip  server along with currency symbol of country with base symbol euro
+            .then(data=>{
+              const cur_api=`http://data.fixer.io/api/latest?access_key=${CURRENCY_APIKEY}&base=EUR&symbols=${CURRENCY}`
+              fetch(cur_api)
+              .then(response=>{
+                return response.json();
+              })
+              //then exchange rate is updated to result 2 div in home page
+              .then(data=>{
+                const rate=data['rates'][CURRENCY];
+                EXRATE=rate;
+                console.log(rate);
+                console.log(EXRATE);
+                result2.innerHTML=`<p> Current exchange rate 1 EUR = ${EXRATE} ${CURRENCY} </p>`
+              });
+            })
+        });
+      });
+    </script>
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="text-center">
+    <h1>Weather Forecast</h1>
+    <br>
+    <br>
+    <h2>Get live weather by country name</h2>
+    <div style="position:fixed;left:50%;transform:translate(-50%);width:480px;">
+     <input type="text" class="form-control" id="input" placeholder="Type country name">
+     <br>
+     <button id="btn" type="button" class="btn btn-primary">Submit</button>
+     <br>
+     <br>
+     <div id="result"></div>
+     <div id="result2"></div>
+   </div>
+
+
+   </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+  </body>
+</html>
