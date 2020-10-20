@@ -3,6 +3,7 @@
 ## Introduction
 This application is built with Django which is a python framework for web development.
 This application has basic features of view,create,edit and delete money spent on personal activities. The money spent on various activities can be categorised with date and type of spent later.
+You can visit this application here, https://personal-account-tracker.herokuapp.com
 ## Files in the project
 - **/pat/views.py**: This is the app file that contains the logic of all the view functions in the backend which generate dynamic contents to HTML template.
 - **/pat/models.py**: Contains Django models used for storing activity data.
