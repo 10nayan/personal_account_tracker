@@ -1,5 +1,6 @@
 from django.urls import path,include
 from .views import ReportDetailView,ReportCreateView,ReportUpdateView,ReportDeleteView,index,signin,signout,register,weather
+# urlpatterns map our view function or class based view to respective urls.
 urlpatterns = [
     path("",index,name='list'),
     path("<int:pk>",ReportDetailView.as_view(),name='detail'),

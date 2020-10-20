@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+#api key is accessed as environ varriable
 WEATHER_APIKEY=os.environ['WEATHER_APIKEY']
 CURRENCY_APIKEY=os.environ['CURRENCY_APIKEY']
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pat.apps.PatConfig',
-    'multiselectfield'
+    'pat.apps.PatConfig', #our app pat is registers here
+    'multiselectfield'  #third party library multiselectfield is registers here
 
 ]
 
@@ -86,6 +86,8 @@ DATABASES = {
     }
 }
 """
+
+#database settings for heroku postgres database, Database URI is accessed as environ varriable
 DATABASES = {}
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
@@ -126,6 +128,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
 
 STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'

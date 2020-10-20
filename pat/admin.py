@@ -1,4 +1,4 @@
 from django.contrib import admin
 from .models import Report
-# Register your models here.
+# Report models is registerd here to use in admin panel
 admin.site.register(Report)
