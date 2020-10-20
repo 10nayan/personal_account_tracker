@@ -18,7 +18,7 @@ from .forms import ReportForm
 from .forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.conf.settings import WEATHER_APIKEY,CURRENCY_APIKEY
+from django.conf import settings
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -117,5 +117,5 @@ def signout(request):
     return redirect('signin')
 
 def weather(request):
-    context={'WEATHER_APIKEY':WEATHER_APIKEY,'CURRENCY_APIKEY':CURRENCY_APIKEY}
+    context={'WEATHER_APIKEY':settings.WEATHER_APIKEY,'CURRENCY_APIKEY':settings.CURRENCY_APIKEY}
     return render (request,'pat/weather.html',context)
