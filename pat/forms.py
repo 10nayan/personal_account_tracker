@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from .models import Report
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
@@ -19,4 +20,7 @@ class ReportForm(ModelForm):
     class Meta:
         model=Report
         fields=('description','cost','date','tags')
+        widgets={
+            'date':forms.SelectDateWidget()
+        }
     
