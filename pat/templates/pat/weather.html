@@ -17,7 +17,6 @@
         var EXRATE=0;
         const WEATHER_APIKEY =`{{WEATHER_APIKEY}}`;//api key is accessed from a config.js file
         const CURRENCY_APIKEY= `{{CURRENCY_APIKEY}}`;
-        console.log(WEATHER_APIKEY);
         //when button is clicked api request is sent to three servers and reponse is updated to result div
         btn.addEventListener('click',()=>{
           cnt_name=input.value;//searchbox value is stored in cnt_name
@@ -56,7 +55,7 @@
                 result.innerHTML=`
                 <h4> ${main} ${description} </h4>
                 <p> Current temp:${parseInt(temp/10)} degree celcius, Current pressure: ${pressure} mb, Current humidity: ${humidity}%</p>
-                <img src="http://openweathermap.org/img/wn/${icon}@2x.png"/>
+                <img src="https://openweathermap.org/img/wn/${icon}@2x.png"/>
                 `;
               });
             })
