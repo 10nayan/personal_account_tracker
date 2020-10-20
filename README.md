@@ -11,14 +11,14 @@ This application has basic features of view,create,edit and delete money spent o
 - **/pat/admin.py**: python app file  required for registering to django-administration of this appliation.
 - **/pat/tests.py**: python app file  required for testing of this appliation.
 - **/pat/apps.py**: python app file  required for registering the pat app to django main project of this appliation.
-- **/personal_account_tracker/**: python main project folder in which pat app is created.
+- **/Activity_Tracker/**: python main project folder in which pat app is created.
 - **pat/templates/**: folder with all HTML files
 - **pat/static/**: for all JS scripts and CSS files
 ## Usage
 ### Clone/Modify app
-1. Modify personal_account_tracker folder or create a new app in the main personal_account_tracker project folder.
+1. Modify Activity_Tracker folder or create a new app in the main Activity_Tracker project folder.
 
-    For modifying existance code or creating new app, These lines need to be edited in personal_account_tracker/settings.py are shown below:
+    For modifying existance code or creating new app, These lines need to be edited in Activity_Tracker/settings.py are shown below:
 ```python
 SECRET_KEY ='<your secret key>'
 ALLOWED_HOSTS = ['<your allowed host>']
@@ -28,10 +28,10 @@ DATABASES = {<your database settings>}
 
 3. Run createsuperuser command to register to django admin panel.
 
-4. Create new app in personal_activity_tracker project folder using following command,
+4. Create new app in Activity_Tracker project folder using following command,
     
 ```console
-C:\<path to personal_activity_tracker>\python manage.py startapp <your app name>
+C:\<path to Activity_Tracker>\python manage.py startapp <your app name>
 ```
 ## Areas of improvement
 1. More functionality can be added to the application such as graph representation of spent type or date, monthly money spent report and linked to google  sheet that a user can download all the data.
